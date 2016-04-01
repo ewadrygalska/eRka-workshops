@@ -1,0 +1,244 @@
+---
+title: "Warsztaty eRka & Software Carpentry - część z R"
+output: html_document
+---
+
+### Słowo wstępu
+
+<p style="text-align:justify;">Jako wprowadzenie do R zachęcam do zapoznania się z ogólnodostępnym fragmentem książki Przemysława Biecka "Przewodnik po pakiecie R. Wydanie III". Wyczerpuje to temat wprowadzenia do R. Fragment w postaci pliku pod dostępny jest pod [tym adresem](http://biecek.pl/R/PrzewodnikPoPakiecieRWydanieIIIinternet.pdf).</p>
+
+Dostępny fragment obejmuje m.in.:
+
+* Łagodne wprowadzenie do R
+* Typy zmiennych i operacje na nich
+* Przetwarzanie potokowe
+* Wybrane funkcje matematyczne
+* Zapisywanie i odczytywanie danych
+* Powtarzalne badania
+* Budowanie własnych pakietów
+
+<p style="text-align:justify;">Informacje dotyczące instalacji R oraz RStudio znajdują się tymczasowo pod [tym adresem](http://www.erkakrakow.pl/R/warsztaty/pk/instalacja-i-konfiguracja.html). **RStudio nie jest samodzielnym programem. Jest to bardzo funkcjonalna nakładka na R, która pozwala w łatwy i przyjemny sposób wykorzystywać możliwości R. Oznacza to, że poza instalacją RStudio, wymagana jest także instalacja R.**</p>
+
+**Dlaczego warto używać RStudio?**
+<p style="text-align:justify;">
+* zarządzanie wieloma plikami/projektami,
+* możliwość automatycznego wysyłania całego skryptu lub fragmentu kodu do konsoli R. Po zaznaczeniu określonego fragmentu kodu po naciśnięciu Ctrl-Enter zadany fragment będzie wykonany w konsoli R,
+* wyświetlanie obiektów (nazwa, klasa, wymiary) obecnych w przestrzeni nazw, edytor danych, funkcji i innych obiektów R, po kliknięciu na nazwę zbioru danych obecnego w przestrzeni nazw mamy możliwość edycji tego obiektu,
+* uproszczony sposób wczytywania danych z plików poprzez menu,
+* podświetlanie słów kluczowych i funkcji,
+* kontekstowe uzupełnianie nazw funkcji, zmiennych, właściwości, argumentów funkcji (gdy rozpoczynamy pisanie nazwy funkcji, zmiennej lub argumenty pojawia się lista wszystkich słów, które pasują w danym kontekście),
+* zwijanie/rozwijanie kodu funkcji i pętli,
+* wsparcie dla pakietów knitra, Sweave i Shiny, łatwa nawigacja po wstawkach kodu,
+* domykanie otwartych nawiasów, cudzysłówów, wraz z inteligentnym zaznaczaniem zawartości (dwukrotne kliknięcie we wnętrze nawiasu, zaznacza całą zawartość nawiasu),
+* inteligentne wstawianie wcięć połączone z rozpoznawaniem składni (czyli nowe wcięcie dodawane jest w pętlach, funkcjach itp),
+* interaktywny debugger.
+</p>
+
+**[Ściągawka dla RStudio](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)**
+
+<p style="text-align:justify;">**Pakiety instalujemy za pomocą funkcji install.packages('nazwa_pakietu'). Na dobry początek warto zainstalować pakiet [pacman](https://cran.r-project.org/web/packages/pacman/pacman.pdf).**</p>
+
+<p style="text-align:justify;">Pod [tym adresem](https://cran.r-project.org/web/views/) można znaleźć listę dostępnych pakietów na głównym repozytorium CRAN.</p>
+
+### Wprowadzenie - kod z warsztatów
+
+**Korzystanie z pomocy**
+
+* ?nazwaFunkcji
+* help(nazwaFunkcji
+* args(nazwaFunkcji)
+* find(fragmentNazwyFunkcji)
+* help.search("poszukiwane_slowo")
+* www.google.pl
+* www.stackoverflow.com
+* TABulator
+
+```{r, eval=FALSE}
+# Komentarz
+1 + 1 # Komentarz
+```
+
+```{r, eval=FALSE}
+# Dzialania arytmetyczne
+2 + 2 - 1       # dodawanie i odejmowanie
+2^10            # potegowanie
+(23-1)*(23+1)   # mnozenie
+10/3.3          # dzielenie
+1/0             # liczby specjalne (nieskonczonosc)
+log(10)         # logarytmy
+log(-1)         # liczby specjalne (NaN jako wartość nieznana)
+5 %%  3         # reszta z dzielenia (5 przez 3)
+5 %/% 3         # część całkowita z dzielenia (5 przez 3)
+
+# i wiele, wiele innych...
+
+# Challange A: co zwróci wyrażenie 'class(1/0)' ?
+# Challange B: co zwróci wyrażenie 'class(log(-1))' ?
+```
+
+```{r, eval=FALSE}
+# Napisy
+
+"Ala"                       # w cudzysłowie
+'Ala'                       # w apostrofie
+paste("Ala", "ma", "kota")  # łączenie napisów za pomocą paste. Znaki typu + oraz & nie działają
+nchar("Hello")              # liczba znaków
+tolower("Hello")            # konwersja do malych liter
+substr("Hello", 2, 3)       # wycinanie fragmentu napisu
+
+# i wiele, wiele innych...
+
+# Challange C: co zwróci wyrażenie 'class("Ala")' ?
+# Challange D: czym się różni paste od paste0 ?
+# Czy zamiast paste można stosować zamiennik typu "Ala" + "ma" + "kota", lub "Ala" & "ma" & "kota" ?
+# Jakaś alternatywa do paste?
+```
+
+```{r, eval=FALSE}
+# Zmienne
+
+licznik    <- 1
+mianownik  <- 10
+
+ulamek     <- licznik / mianownik
+ulamek
+
+(ulamek    <- licznik / mianownik) # nawias pozwala na wykonanie dwóch powyższych linijek jednocześnie
+
+# Challange E: Co zwróci zmienna 'ulamek', gdy wykonamy następujące przypisanie
+mianownik <- 2
+# ?
+ulamek
+# Dlaczego tak się stało?
+```
+
+
+```{r, eval=FALSE}
+# Wielkość liter ma znaczenie!
+
+a <- 1
+A <- 2
+a == A
+```
+
+### Odpowiedzi
+**Challange A**
+``` {r}
+class(1/0)          # Inf jest liczbą       
+Inf > 10^10^10      # trzeba być czujnym    
+Inf == 10^10^10     # trzeba być czujnym
+```
+**Challange B**
+``` {r}
+class(log(-1))      # NaN jest liczbą       
+NaN > 0             # NA jest wartością logiczną określającą brak możliwości jednoznacznego przypisania TRUE lub FALSE
+```
+**Challange C**
+``` {r}
+class("Ala") 
+```
+**Challange D**
+``` {r}
+paste("Ala", "ma", "kota")                      
+paste0("Ala", "ma", "kota")
+# "Ala" + "ma" + "kota" nie zadziała
+# "Ala" & "ma" & "kota" nie zadziała
+cat("Ala", "ma", "kota")
+licznik    <- 1
+mianownik  <- 10
+(ulamek <- licznik/mianownik)
+```
+**Challange E**
+``` {r}
+mianownik <- 2
+ulamek              # przypisanie do zmiennej to przypisanie pewnej etykiety do wyniku działania wyrażenia, tzn. że zmienna nie pamięta jakie kroki pośrednie były wykonywane, a jedynie pamięta wynik. W momencie zmiany wartości zmiennej 'mianownik', zmienna 'ulamek' nie ulega aktualizacji.
+```
+
+### Analiza danych z krokomierza
+
+W pliku krokomierz.csv znajdują się tabelka 52 wiersze na 7 kolumn, gdzie wiersze odpowiadają kolejnym tygodniom 2015 roku, natomiast kolumny odpowiadają poszczególnym dniom tygodnia. Tabela zawiera informacje o liczbie kroków wykonanych każdego dnia 2015 roku.
+
+**Wczytywanie danych z pliku csv**
+```{r}
+dane <- read.csv("dane/krokomierz.csv") # tutaj należy podać ścieżkę do pliku
+# ?read.csv dla plików csv z kolumnami rozdzielanymi przecinkami (domyślnie)
+# ?read.csv dla plików csv z kolumnami rozdzielanymi średnikami (domyślnie)
+
+# LifeHack, funkcja url() pozwala na zaciąganie danych bezpośrednio z internetu
+```
+**Szybki wgląd w dane**
+```{r}
+colnames(dane)  # wektor nazw kolumn
+rownames(dane)  # wektor nazw wierszy
+nrow(dane)      # liczba wierszy
+ncol(dane)      # liczba kolumn
+head(dane)      # wyświetla 6 pierwszych wierszy tabeli (domyślnie)
+tail(dane)      # wyświetla 6 ostatnich wierszy tabeli (domyślnie)
+summary(dane)   # szybkie statystyki, osobno dla każdej kolumny
+
+class(dane)     # zmienna dane jest ramką danych, czyli tablicą, której różne kolumny mogą mieć różne typy danych
+
+# LifeHack, gdy nie używamy RStudio, dane możemy przeglądać za pomocą funkcji edit(dane), natomiast wpisując fix(dane) będziemy mogli także zmieniać wartości tabeli
+``` 
+**Wyciąganie danych**
+```{r}
+dane[10, 1]         # bezpośrednio przez podanie współrzędnych
+dane[10,]           # cały wiersz
+dane[,1]            # cała kolumna
+dane[10, 'Cz']      # do kolumny możemy odwoływać się także poprzez jej nazwę
+dane$Cz[10]         # za pomocą $ przechodzimy do kolumny (wtedy dane$Cz traktowane jest jako wektor) i wybieramy wartość z 10 pozycji wektora (czyli 10 wiersza)
+
+# Można wybierać jednocześnie całe podzbiory, poprzez użycie wektorów
+# 1:10 to to samo co c(1,2,3,4,5,6,7,8,9,10) i to samo seq(1,10,1)
+# Sprawdź ?c oraz ?seq
+dane[1:10, 1:2]     
+
+dane[1:10, c("Sb", "Nd")] # wektory mogą także zawierać nazwy kolumn
+seq_along(colnames(dane)) # ?seq_along
+
+dane_tygodnie_parzyste <- dane[seq(2,52,2), ] # wybranie danych z parzystych tygodni
+rownames(dane_tygodnie_parzyste)
+
+dane_tydz10 <- dane[10,]    # wybranie danych dla 10 tygodnia
+dane_tydz10[-1]             # dzięki znakowi - można wyrzucać współrzędne (w tym przypadku wyświetlą się dane dla całego tygodnia poza czwartkiem)
+dane_tydz10[-1:-7]          # tutaj wyświetli się pusta ramka, ponieważ usuwamy wszystkie dni
+
+dane_tydz10[FALSE]          # co się stanie jak zamiast indeksów umieścimy wartości logiczne?
+dane_tydz10[c(FALSE,TRUE)]  # dane_tydz10 to wektor siedmioelementowy, R automatycznie dopasowuje wektor dwuelementowy na potrzeby wybrania odpowiednich wartości, robi to poprzez replikację wektora krótszego, aż do momentu uzyskania pożądanego wyniku
+dane_tydz10[c(FALSE,TRUE,FALSE,TRUE,FALSE,TRUE,FALSE)] # to jest równoważne z powyższym, przy czym tutaj nie jest już potrzebna replikacja
+dane_tydz10 < 1000          # w ten sposób otrzymamy wektor z wartościami logicznymi, gdzie TRUE oznacza, że wartość na danej współrzędnej spełnia warunek, natomiast FALSE oznacza, że warunek nie jest spełniony
+dane_tydz10[dane_tydz10 < 1000] # mix powyższych pozwala nam na wyświetlanie wartości spełniających nasz warunek
+dane_tydz10[dane_tydz10 < 1000] <- NA # dzięki temu możemy te dane podmienić wg naszych potrzeb
+dane_tydz10
+```
+**Proste obliczenia**
+Jest sporo pakietów, które pozwalają na niezłą zabawę z danymi bez tworzenia wielu linijek kodu. Sama biblioteka bazowa daje duże możliwości.
+```{r}
+rowSums(dane, na.rm = TRUE)  # sumy po wierszach
+colSums(dane, na.rm = TRUE)  # sumy po kolumnach
+rowMeans(dane, na.rm = TRUE) # średnie po wierszach
+colMeans(dane, na.rm = TRUE) # średnie po kolumnach
+
+# dla mediany nie ma, ale to można szybko naprawić - nawet bez stosowania for
+# Sprwadź ?apply
+(rowMedians <- apply(dane,1,median, na.rm = TRUE))
+(colMedians <- apply(dane,2,median, na.rm = TRUE))
+```
+**Bardzo proste wykresy**
+```{r}
+# ?plot
+plot(rowMeans(dane, na.rm=T)) # numer tygodnia ~ średnia liczba kroków
+
+plot(colMeans(dane, na.rm=T)) # dzień tygodnia ~ średnia liczba kroków
+
+plot(colMeans(dane, na.rm=T), main="Kroki a dni tygodnia") # dodawanie tytułu
+
+plot(colMeans(dane, na.rm=T), main="Kroki a dni tygodnia", ylim=c(0,10000)) # poprawa zakresu na osi 0Y
+
+plot(colMeans(dane, na.rm=T), main="Kroki a dni tygodnia", ylim=c(0,10000), col="red") # kolor punktów
+
+plot(colMeans(dane, na.rm=T), main="Kroki a dni tygodnia", ylim=c(0,10000), col="red", pch=23) # kształt punktów
+
+# ?boxplot
+boxplot(dane) # wykres pudełkowy
+```
