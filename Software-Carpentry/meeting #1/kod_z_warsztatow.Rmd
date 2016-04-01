@@ -17,10 +17,10 @@ Dostępny fragment obejmuje m.in.:
 * Powtarzalne badania
 * Budowanie własnych pakietów
 
-<p style="text-align:justify;">Informacje dotyczące instalacji R oraz RStudio znajdują się tymczasowo pod [tym adresem](http://www.erkakrakow.pl/R/warsztaty/pk/instalacja-i-konfiguracja.html). **RStudio nie jest samodzielnym programem. Jest to bardzo funkcjonalna nakładka na R, która pozwala w łatwy i przyjemny sposób wykorzystywać możliwości R. Oznacza to, że poza instalacją RStudio, wymagana jest także instalacja R.**</p>
+<p style="text-align:justify;"> Informacje dotyczące instalacji R oraz RStudio znajdują się tymczasowo pod [tym adresem](http://www.erkakrakow.pl/R/warsztaty/pk/instalacja-i-konfiguracja.html). **RStudio nie jest samodzielnym programem. Jest to bardzo funkcjonalna nakładka na R, która pozwala w łatwy i przyjemny sposób wykorzystywać możliwości R. Oznacza to, że poza instalacją RStudio, wymagana jest także instalacja R.** </p>
 
 **Dlaczego warto używać RStudio?**
-<p style="text-align:justify;">
+
 * zarządzanie wieloma plikami/projektami,
 * możliwość automatycznego wysyłania całego skryptu lub fragmentu kodu do konsoli R. Po zaznaczeniu określonego fragmentu kodu po naciśnięciu Ctrl-Enter zadany fragment będzie wykonany w konsoli R,
 * wyświetlanie obiektów (nazwa, klasa, wymiary) obecnych w przestrzeni nazw, edytor danych, funkcji i innych obiektów R, po kliknięciu na nazwę zbioru danych obecnego w przestrzeni nazw mamy możliwość edycji tego obiektu,
@@ -32,7 +32,6 @@ Dostępny fragment obejmuje m.in.:
 * domykanie otwartych nawiasów, cudzysłówów, wraz z inteligentnym zaznaczaniem zawartości (dwukrotne kliknięcie we wnętrze nawiasu, zaznacza całą zawartość nawiasu),
 * inteligentne wstawianie wcięć połączone z rozpoznawaniem składni (czyli nowe wcięcie dodawane jest w pętlach, funkcjach itp),
 * interaktywny debugger.
-</p>
 
 **[Ściągawka dla RStudio](http://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)**
 
